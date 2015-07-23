@@ -1,166 +1,227 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
+<html lang="zh">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>灵雀云Shadowsocks部署工具</title>
+    <title>Shadowsocks Cloud</title>
 
-    <!-- Bootstrap -->
-    <link href="./bootstrap-3.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.useso.com/css?family=Roboto:400,100,300,500|Iceland">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/form-elements.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+</head>
+<body>
+<!-- Top menu -->
+<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
     <div class="container">
-      <h1>一键部署 Shadowsocks 到灵雀云上</h1>
-      <div class="col-md-9">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="selectAuthType" class="col-sm-4 control-label">账号鉴权方式</label>
-            <div class="col-sm-8">
-              <select class="form-control" id="selectAuthType" name="auth_type">
-                <option id="authTypeToken" value="token" selected>Token</option>
-                <option id="authTypePassword" value="password">账号密码</option>
-              </select>
+        <div class="navbar-header">
+            <span class="logo">Shadowsocks</span>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="top-navbar-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <span class="li-social">
+                        <a href="https://github.com/xjchengo/ss-deploy" target="_blank"><i
+                                class="fa fa-github"></i></a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Top content -->
+<div class="top-content">
+
+    <div class="inner-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1><strong>Shadowsocks Cloud</strong></h1>
+
+                    <div class="description">
+                        <p>
+                            基于 <a href="http://www.alauda.cn/">灵雀云</a> API，提供一键部署 Shadowsocks 功能。
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="form-group auth-type-token">
-            <label for="inputToken" class="col-sm-4 control-label">Token</label>
-            <div class="col-sm-8">
-              <input type="text" name="token" class="form-control" id="inputToken" placeholder="可以在用户设置中找到你的token">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+
+                    <form role="form" action="" method="post" class="deploy-form">
+
+                        <fieldset>
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Step 1 / 2</h3>
+
+                                    <p>灵雀云账号验证:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <div class="form-group">
+                                    <label class="sr-only" for="alauda_username">灵雀云账号</label>
+                                    <input type="text" name="alauda_username" placeholder="灵雀云账号"
+                                           class="alauda_username form-control" id="alauda_username" tabindex="1"
+                                           autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="alauda_auth_type" class="sr-only">账号验证方式</label>
+                                    <select class="alauda_auth_type form-control" id="alauda_auth_type"
+                                            name="alauda_auth_type" tabindex="3">
+                                        <option value="">账号鉴权方式</option>
+                                        <option id="auth_type_password" value="password" selected>使用密码验证</option>
+                                        <option id="auth_type_token" value="token">使用 Token 验证</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="alauda_password">灵雀云密码</label>
+                                    <input type="password" name="alauda_password" placeholder="灵雀云密码"
+                                           class="alauda_password form-control" id="alauda_password" tabindex="2">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="alauda_token">灵雀云 Token</label>
+                                    <input type="text" name="alauda_token" placeholder="灵雀云 Token"
+                                           class="alauda_token form-control" id="alauda_token" tabindex="4">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <button type="button" class="btn btn-next">下一步</button>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <a href="https://console.alauda.cn/ap/register" target="_blank">没有账号？点击注册</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Step 2 / 2</h3>
+
+                                    <p>Shadowsocks 配置:</p>
+                                </div>
+                                <div class="form-top-right">
+
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <div class="form-group">
+                                    <label class="sr-only" for="ss_method">Shadowsocks 加密方式</label>
+                                    <select class="form-control" id="ss_method" name="ss_method">
+                                        <option>请选择 Shadowsocks 加密方式</option>
+                                        <option selected>aes-256-cfb</option>
+                                        <option>aes-128-cfb</option>
+                                        <option>aes-192-cfb</option>
+                                        <option>aes-256-ofb</option>
+                                        <option>aes-128-ofb</option>
+                                        <option>aes-192-ofb</option>
+                                        <option>aes-128-ctr</option>
+                                        <option>aes-192-ctr</option>
+                                        <option>aes-256-ctr</option>
+                                        <option>aes-128-cfb8</option>
+                                        <option>aes-192-cfb8</option>
+                                        <option>aes-256-cfb8</option>
+                                        <option>aes-128-cfb1</option>
+                                        <option>aes-192-cfb1</option>
+                                        <option>aes-256-cfb1</option>
+                                        <option>bf-cfb</option>
+                                        <option>camellia-128-cfb</option>
+                                        <option>camellia-192-cfb</option>
+                                        <option>camellia-256-cfb</option>
+                                        <option>cast5-cfb</option>
+                                        <option>chacha20</option>
+                                        <option>idea-cfb</option>
+                                        <option>rc2-cfb</option>
+                                        <option>rc4-md5</option>
+                                        <option>salsa20</option>
+                                        <option>seed-cfb</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="ss_password">Shadowsocks 密码</label>
+                                    <input type="text" name="ss_password" placeholder="请设置 Shadowsocks 密码"
+                                           class="ss_password form-control" id="ss_password">
+                                </div>
+                                <div class="form-group hide">
+                                    <label class="sr-only" for="ss_timeout">Shadowsocks 超时时间</label>
+                                    <input type="text" name="ss_timeout" value="300" placeholder="Shadowsocks 服务器超时时间"
+                                           class="ss_timeout form-control" id="ss_timeout">
+                                </div>
+                                <div class="form-group hide">
+                                    <label class="sr-only" for="ss_workers">Shadowsocks Worker 数量</label>
+                                    <input type="text" name="ss_workers" value="1" placeholder="Shadowsocks Worker 数量"
+                                           class="ss_workers form-control" id="ss_workers">
+                                </div>
+                                <button type="button" class="btn btn-deploy">部署</button>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>部署成功</h3>
+
+                                    <p>Shadowsocks 服务信息:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <dl class="dl-horizontal">
+                                    <dt>服务器域名/IP</dt>
+                                    <dd id="dd-domain"></dd>
+                                    <dt>服务器端口</dt>
+                                    <dd id="dd-port"></dd>
+                                    <dt>密码</dt>
+                                    <dd id="dd-password"></dd>
+                                    <dt>加密方式</dt>
+                                    <dd id="dd-method"></dd>
+                                </dl>
+                            </div>
+                        </fieldset>
+                    </form>
+
+                </div>
             </div>
-          </div>
-          <div class="form-group auth-type-password hide">
-            <label for="inputUsername" class="col-sm-4 control-label">用户名</label>
-            <div class="col-sm-8">
-              <input type="text" name="username" class="form-control" id="inputUsername" placeholder="用户名">
-            </div>
-          </div>
-          <div class="form-group auth-type-password hide">
-            <label for="inputPassword" class="col-sm-4 control-label">密码</label>
-            <div class="col-sm-8">
-              <input type="password" name="password" class="form-control" id="inputPassword" placeholder="密码">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputSSPassword" class="col-sm-4 control-label">Shadowsocks 密码</label>
-            <div class="col-sm-8">
-              <input type="password" name="ss_password" class="form-control" id="inputSSPassword" placeholder="Shadowsocks 密码">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputTimeout" class="col-sm-4 control-label">Shadowsocks 服务器超时时间</label>
-            <div class="col-sm-8">
-              <input type="text" name="timeout" class="form-control" id="inputTimeout" placeholder="Shadowsocks Timeout" value="300">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputSSPassword" class="col-sm-4 control-label">Shadowsocks 加密方式</label>
-            <div class="col-sm-8">
-              <select class="form-control" id="selectAuthType" name="auth_type">
-                <option selected>aes-256-cfb</option>
-                <option>aes-128-cfb</option>
-                <option>aes-192-cfb</option>
-                <option>aes-256-ofb</option>
-                <option>aes-128-ofb</option>
-                <option>aes-192-ofb</option>
-                <option>aes-128-ctr</option>
-                <option>aes-192-ctr</option>
-                <option>aes-256-ctr</option>
-                <option>aes-128-cfb8</option>
-                <option>aes-192-cfb8</option>
-                <option>aes-256-cfb8</option>
-                <option>aes-128-cfb1</option>
-                <option>aes-192-cfb1</option>
-                <option>aes-256-cfb1</option>
-                <option>bf-cfb</option>
-                <option>camellia-128-cfb</option>
-                <option>camellia-192-cfb</option>
-                <option>camellia-256-cfb</option>
-                <option>cast5-cfb</option>
-                <option>chacha20</option>
-                <option>idea-cfb</option>
-                <option>rc2-cfb</option>
-                <option>rc4-md5</option>
-                <option>salsa20</option>
-                <option>seed-cfb</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputWorkers" class="col-sm-4 control-label">Shadowsocks Worker 数量</label>
-            <div class="col-sm-8">
-              <input type="text" name="workers" class="form-control" id="inputWorkers" placeholder="Shadowsocks Worker 数量" value="1">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-8">
-              <button type="submit" class="btn btn-default">部署</button>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
-    <script src="./jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="./jquery-validation/dist/localization/messages_zh.min.js"></script>
-    <script src="./jquery-blockui/jquery.blockUI.js"></script>
-    <script type="text/javascript">
-    $('#selectAuthType').change(function() {
-      var authType = $(this).val();
-      if (authType == 'token') {
-        $('.auth-type-password').addClass('hide');
-        $('.auth-type-token').removeClass('hide');
-      } else {
-        $('.auth-type-token').addClass('hide');
-        $('.auth-type-password').removeClass('hide');
-      }
-    });
-    $("form").validate({
-      rules: {
-        auth_type: {
-          required: true
-        },
-        token: {
-          required: '#authTypeToken:selected'
-        },
-        username: {
-          required: '#authTypePassword:selected'
-        },
-        password: {
-          required: '#authTypePassword:selected'
-        },
-        ss_password: {
-          required: true
-        },
-        timeout: {
-          required: true,
-          number: true
-        },
-        method: {
-          required: true
-        },
-        workers: {
-          required: true,
-          number: true
-        }
-      },
-      submitHandler: function(form) {
-        $.blockUI({
-          message: '<h1>Shadowsocks 服务部署中<img src="./jquery-blockui/ajax-loader.gif"></h1>'
-        });
-      }
-    });
-    </script>
-  </body>
+</div>
+
+<!-- Javascript -->
+<script src="assets/js/jquery-1.11.1.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/jquery.backstretch.min.js"></script>
+<script src="assets/js/retina-1.1.0.min.js"></script>
+<script src="assets/js/jquery.blockUI.js"></script>
+<script src="assets/js/bootbox.min.js"></script>
+<script src="assets/js/scripts.js"></script>
+
+<!--[if lt IE 10]>
+<script src="assets/js/placeholder.js"></script>
+<![endif]-->
+
+</body>
+
 </html>
