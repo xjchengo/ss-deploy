@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
     });
 
     $(document).keypress(function (e) {
-        if (e.which == 13) {
+        if (e.which == 13 && !$('.blockUI').is(':visible')) {
             if ($('.bootbox button').is(':visible')) {
                 $('.bootbox button').trigger('click');
             } else {
