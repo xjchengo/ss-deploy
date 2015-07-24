@@ -70,6 +70,7 @@ try {
             'status' => -1,
             'msg' => $message,
         ];
+        error_log($message."\n", 3, './error.log');
     }
 
     echo json_encode($return);

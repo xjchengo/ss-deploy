@@ -60,6 +60,7 @@ try {
             'status' => 1,
             'msg' => json_encode($result),
         ]);
+        error_log(json_encode($result)."\n", 3, './error.log');
     } else {
         echo json_encode([
             'status' => 0,
@@ -71,5 +72,6 @@ try {
         'status' => 1,
         'msg' => $e->getMessage(),
     ]);
+    error_log($e->getMessage()."\n", 3, './error.log');
     exit();
 }
