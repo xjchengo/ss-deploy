@@ -73,6 +73,7 @@ try {
         error_log($message."\n", 3, './error.log');
     }
 
+    
     echo json_encode($return);
     exit();
 }
