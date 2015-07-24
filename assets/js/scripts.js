@@ -74,10 +74,8 @@ jQuery(document).ready(function () {
                         message: '<h1>灵雀云账号验证中 <img src="./assets/img/ajax-loader.gif"></h1>'
                     });
                 },
-                complete: function () {
-                    $.unblockUI();
-                },
                 success: function (result) {
+                    $.unblockUI();
                     if (result.status == 0) {
                         if (result.stage == 0) {
                             parent_fieldset.fadeOut(400, function () {
@@ -85,6 +83,9 @@ jQuery(document).ready(function () {
                                 $('#ss_password').focus();
                             });
                         } else {
+                            $.blockUI({
+                                message: '<h1>服务已创建，正在为您查询状态 <img src="./assets/img/ajax-loader.gif"></h1>'
+                            });
                             wait_for_deploy();
                         }
                     } else if (result.status == 1) {
@@ -94,6 +95,7 @@ jQuery(document).ready(function () {
                     }
                 },
                 error: function () {
+                    $.unblockUI();
                     bootbox.alert("服务异常");
                 }
             });
